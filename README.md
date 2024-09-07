@@ -1,6 +1,6 @@
 # XSS911 - Advanced XSS Vulnerability Scanner
 
-![Preview](xss911/screenshots/xss911.PNG)
+![Preview](screenshots/xss911.PNG)
 
 XSS911 is a powerful and flexible XSS (Cross-Site Scripting) vulnerability scanner designed to identify and report various types of XSS vulnerabilities. The tool covers reflected, stored, DOM-based, and blind XSS attacks with advanced detection mechanisms and reporting features.
 
@@ -60,8 +60,7 @@ python -m unittest discover -s xss911/tests
 
 ## Screenshots
 
-![Preview](xss911/screenshots/xss911.png)
-![Preview](xss911/screenshots/xss911s.png)
+![Preview](screenshots/xss911.png)![Preview](screenshots/xss911s.png)
 
 ## Contributing
 
