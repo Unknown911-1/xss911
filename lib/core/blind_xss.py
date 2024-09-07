@@ -36,10 +36,9 @@ def form_vector(url, type, action, payloads):
                     elif input_type == 'hidden':
                         data[input_name] = input_tag.get('value', '')
             try:
-                
                 res = form_request(form_url, data, method, payload)
-                blind_xss_report(url, data, payload, res.status_code)
-
+                if res:
+                    blind_xss_report(url, data, payload, res.status_code)
             except LimitReachedException as e:
                 logger.info(f"Stopping scan: {e}")
                 return
@@ -56,8 +55,8 @@ def find_params(url):
         return params
 
     except requests.exceptions.RequestException as e:
-        return False
-
+        logger.error(f'Error fetching parameters from {url}: {e}')
+        return []
 
 def url_vector(url, action, payloads):
     parsed_url = urlparse(url)
@@ -70,25 +69,29 @@ def url_vector(url, action, payloads):
                     key, _ = query.split('=')
                     for payload in payloads:
                         res = url_request(url, {key: payload}, payload, 'query')
-                        blind_xss_report(url, {key: payload}, payload, res.status_code)
+                        if res:
+                            blind_xss_report(url, {key: payload}, payload, res.status_code)
 
-        elif parsed_url.fragment:
+        if parsed_url.fragment:
             for payload in payloads:
                 res = url_request(url, {}, payload, 'fragment')
-                blind_xss_report(url, {parsed_url.fragment: payload}, payload, res.status_code)
+                if res:
+                    blind_xss_report(url, {parsed_url.fragment: payload}, payload, res.status_code)
 
-        elif parsed_url.path:
+        if parsed_url.path:
             if parsed_url.path.endswith('/'):
                 parsed_path = parsed_url.path[:-1]
                 for payload in payloads:
                     res = url_request(url, {}, payload, 'path')
-                    blind_xss_report(url, {parsed_path: payload}, payload, res.status_code)
+                    if res:
+                        blind_xss_report(url, {parsed_path: payload}, payload, res.status_code)
             else:
-                for payload in payloads:
-                    params = find_params(url)
-                    for param in params:
+                params = find_params(url)
+                for param in params:
+                    for payload in payloads:
                         res = url_request(url, {param: payload}, payload, 'param')
-                        blind_xss_report(url, {param: payload}, payload, res.status_code)
+                        if res:
+                            blind_xss_report(url, {param: payload}, payload, res.status_code)
 
         else:
             for payload in payloads:
@@ -101,9 +104,9 @@ def url_vector(url, action, payloads):
 def http_vector(url, action, payloads, headers=None):
     for payload in payloads:
         try:
-            
             res = send_request(url, payload, headers)
-            blind_xss_report(url, headers if headers else res.headers, payload, res.status_code)
+            if res:
+                blind_xss_report(url, headers if headers else {}, payload, res.status_code)
         except LimitReachedException as e:
             logger.info(f"Stopping scan: {e}")
             return

@@ -39,7 +39,8 @@ def parse_javascript(response):
             js_code.append(script.string)
 
     for tag in inline_handlers:
-        js_code.append(str(tag.attrs))
+        # Append inline JavaScript code as string from attributes
+        js_code.append(" ".join([f"{key}={value}" for key, value in tag.attrs.items() if key.startswith('on')]))
 
     return js_code
 
@@ -53,9 +54,8 @@ def inspect_dom_manipulation(js_code, url_parameters):
 
     # Inspect each piece of JavaScript code for dangerous sinks
     for js in js_code:
-        # Check if any user input (like URL parameters) is passed to a dangerous sink
         for sink in SINKS:
-            if sink in js and url_parameters in js:
+            if sink in js and any(param in js for param in url_parameters):
                 logger.warning(f"User input passed to dangerous sink: {sink}")
                 vulnerable_code.append(js)
                 found_vulnerabilities += 1
@@ -66,21 +66,22 @@ def inspect_dom_manipulation(js_code, url_parameters):
 def test_payload_injection(url, vulnerable_code, payloads, res):
     for code in vulnerable_code:
         for payload in payloads:
-            # Inject XSS payload into vulnerable DOM sinks
-            injected_code = code.replace("user_input", payload)  # You can improve this logic if needed
+            # Attempt to simulate XSS injection
+            injected_code = code.replace("user_input", payload)
             if "alert" in injected_code:  # Simplified detection
                 log_payload(f"Potential DOM-Based XSS found: {injected_code}")
                 record_dom_attacks(url, code, payload, res)  # Log to reports
 
 def detect_execution(response_time, js_code, payloads):
     for payload in payloads:
-        if re.search(payload, js_code):
-            if response_time > 2:  # Detect slow, possibly asynchronous payload execution
-                logger.critical(f"XSS payload executed asynchronously: {payload}")
-            else:
-                logger.critical(f"XSS payload detected: {payload}")
+        for code in js_code:
+            if re.search(payload, code):
+                if response_time > 2:  # Detect slow, possibly asynchronous payload execution
+                    logger.critical(f"XSS payload executed asynchronously: {payload}")
+                else:
+                    logger.critical(f"XSS payload detected: {payload}")
 
-def dom_xss_analyzer(url, response, url_parameter, action, payloads):
+def dom_xss_analyzer(url, response, url_parameters, action, payloads):
     global found_vulnerabilities
 
     # Log the outgoing request that generated this response
@@ -88,13 +89,14 @@ def dom_xss_analyzer(url, response, url_parameter, action, payloads):
 
     try:
         suspicious_js = parse_javascript(response)
-        vulnerable_code = inspect_dom_manipulation(suspicious_js, url_parameter)
+        vulnerable_code = inspect_dom_manipulation(suspicious_js, url_parameters)
 
         if vulnerable_code:
             test_payload_injection(url, vulnerable_code, payloads, response)
 
             # Simulate a request handling cycle
             start_time = time.time()
+            time.sleep(1)  # Simulate some delay in response processing
             response_time = time.time() - start_time
 
             # Detect potential XSS execution

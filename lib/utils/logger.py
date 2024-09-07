@@ -1,7 +1,7 @@
 import logging
-import colorlog
 import os
 import time
+from termcolor import colored
 
 # Custom logging levels similar to sqlmap
 PAYLOAD = 25  # Between INFO and WARNING
@@ -29,11 +29,17 @@ log_colors = {
     'CRITICAL': 'red',
 }
 
+class ColoredFormatter(logging.Formatter):
+    def format(self, record):
+        levelname = record.levelname
+        message = super().format(record)
+        color = log_colors.get(levelname, 'white')
+        return colored(message, color)
+
 # Define log format for console with colors and timestamps
 console_log_format = "%(asctime)s [%(levelname)s] %(message)s"
-console_formatter = colorlog.ColoredFormatter(
+console_formatter = ColoredFormatter(
     fmt=console_log_format,
-    log_colors=log_colors,
     datefmt='[%H:%M:%S]'  # Time format for console logs
 )
 
@@ -88,7 +94,7 @@ def set_verbose_mode(is_verbose):
         console_handler.setLevel(logging.WARNING)
         logger.info("SILENT MODE: Only showing warnings and errors")
 
-'''# Example log entries for testing
+# Example log entries for testing
 if __name__ == "__main__":
     logger.debug("This is a DEBUG message")
     logger.info("This is an INFO message")
@@ -98,4 +104,3 @@ if __name__ == "__main__":
     logger.warning("This is a WARNING message")
     logger.error("This is an ERROR message")
     logger.critical("This is a CRITICAL message")
-'''

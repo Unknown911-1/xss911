@@ -12,10 +12,11 @@ def send_request_with_header_payloads(url, payload, headers=None):
         }
     try:
         response = requests.get(url, headers=headers)
+        logger.debug(f"Request with headers: {headers}, Status Code: {response.status_code}, Content: {response.text}")
         return response
     except requests.RequestException as e:
         logger.error(f'Error sending request with payload {payload}: {e}')
-        return None
+        return
 
 def form_request(url, data, method, payload):
     try:
@@ -25,17 +26,17 @@ def form_request(url, data, method, payload):
             res = requests.get(url, params=data)
         else:
             logger.error(f'Invalid method: {method}')
-            return None
+            return
+        logger.debug(f"Response status code: {res.status_code}, Content: {res.text}")
         res_analyzer(res, payload)
         return res
     except requests.RequestException as e:
         logger.error(f'Error fetching the URL {url} with method {method}: {e}')
-        return None
+        return
 
     except LimitReachedException as e:
         logger.info(f"Stopping scan: {e}")
-        return None
-        
+        return 
 
 def url_request(url, data, payload, action):
     try:
@@ -60,14 +61,14 @@ def url_request(url, data, payload, action):
         elif action == 'param':
             if not data:
                 logger.error('No parameters provided for URL action.')
-                return None
+                return
             param = list(data.keys())[0]
             param_url = f'{url}?{param}={payload}'
             response = requests.get(param_url, timeout=10)
 
         else:
             logger.error(f'Invalid action: {action}')
-            return None
+            return
 
         if response and response.status_code == 200:
             res_analyzer(response, payload)
@@ -81,11 +82,11 @@ def url_request(url, data, payload, action):
 
     except requests.RequestException as e:
         logger.error(f'Error in URL request: {e}')
-        return None
+        return 
 
     except LimitReachedException as e:
         logger.info(f"Stopping scan: {e}")
-        return None
+        return
 
 def check_stored_payload(url, payload):
     # Perform a second request to check if the payload is reflected
@@ -97,8 +98,8 @@ def check_stored_payload(url, payload):
 
     except requests.RequestException as e:
         logger.error(f'Error in URL request: {e}')
-        return None
+        return
 
     except LimitReachedException as e:
         logger.info(f"Stopping scan: {e}")
-        return None
+        return

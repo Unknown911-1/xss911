@@ -60,7 +60,7 @@ python -m unittest discover -s xss911/tests
 
 ## Screenshots
 
-![Preview](screenshots/xss911.png)![Preview](screenshots/xss911s.png)
+![Preview](screenshots/screenshots.PNG)![Preview](screenshots/screenshot.PNG)
 
 ## Contributing
 

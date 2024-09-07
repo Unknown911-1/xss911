@@ -4,8 +4,13 @@ from urllib.parse import urljoin, urlparse
 from lib.utils.logger import logger
 from lib.core.request_handler import send_request_with_header_payloads as send_request, form_request, url_request, check_stored_payload
 from reports.reports import record_request_params, record_request_form, record_request_headers
+from lib.analyzers.response_analyzer import LimitReachedException
+
+DISPLAY_LIMIT = 3
+found_vulnerabilities = 0
 
 def form_vectors(url, type, action, payloads):
+    global found_vulnerabilities
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -26,6 +31,9 @@ def form_vectors(url, type, action, payloads):
         form_url = urljoin(url, actions) if actions else url
 
         for payload in payloads:
+            if found_vulnerabilities >= DISPLAY_LIMIT:
+                raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
+
             data = {}
             for input_tag in form.find_all(['input', 'textarea']):
                 input_name = input_tag.get('name')
@@ -37,13 +45,11 @@ def form_vectors(url, type, action, payloads):
                         data[input_name] = input_tag.get('value', '')
 
             res = form_request(form_url, data, method, payload)
-            if type == 'stored':
-                if res:
-                    for payload in payloads:
-                        form_request(form_url, data, method, payload)
-                        check_stored_payload(form_url, payload)
-                    
-            record_request_form(url, data, payload, res.status_code)
+            if res:
+                logger.debug(f"Form Request Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+                if res.status_code == 200:
+                    found_vulnerabilities += 1
+                record_request_form(url, data, payload, res.status_code)
 
 def find_params(url):
     try:
@@ -57,9 +63,11 @@ def find_params(url):
         return params
 
     except requests.exceptions.RequestException as e:
-        return False
-        
+        logger.error(f'Error fetching parameters from {url}: {e}')
+        return []
+
 def url_vectors(url, action, payloads):
+    global found_vulnerabilities
     parsed_url = urlparse(url)
 
     if parsed_url.query:
@@ -68,34 +76,65 @@ def url_vectors(url, action, payloads):
             if '=' in query:
                 key, _ = query.split('=')
                 for payload in payloads:
+                    if found_vulnerabilities >= DISPLAY_LIMIT:
+                        raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
                     res = url_request(url, {key: payload}, payload, 'query')
-                    record_request_params(url, {key: payload}, payload, res.status_code)
+                    if res:
+                        logger.debug(f"URL Request Query Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+                        if res.status_code == 200:
+                            found_vulnerabilities += 1
+                        record_request_params(url, {key: payload}, payload, res.status_code)
 
     elif parsed_url.fragment:
         for payload in payloads:
+            if found_vulnerabilities >= DISPLAY_LIMIT:
+                raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
             res = url_request(url, {}, payload, 'fragment')
-            record_request_params(url, {parsed_url.fragment: payload}, payload, res.status_code)
+            if res:
+                logger.debug(f"URL Request Fragment Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+                if res.status_code == 200:
+                    found_vulnerabilities += 1
+                record_request_params(url, {parsed_url.fragment: payload}, payload, res.status_code)
 
     elif parsed_url.path:
         if parsed_url.path.endswith('/'):
             parsed_path = parsed_url.path[:-1]
             for payload in payloads:
+                if found_vulnerabilities >= DISPLAY_LIMIT:
+                    raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
                 res = url_request(url, {}, payload, 'path')
-                record_request_params(url, {parsed_path: payload}, payload, res.status_code)
+                if res:
+                    logger.debug(f"URL Request Path Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+                    if res.status_code == 200:
+                        found_vulnerabilities += 1
+                    record_request_params(url, {parsed_path: payload}, payload, res.status_code)
         else:
             for payload in payloads:
+                if found_vulnerabilities >= DISPLAY_LIMIT:
+                    raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
                 params = find_params(url)
                 for param in params:
                     res = url_request(url, {param: payload}, payload, 'param')
-                    record_request_params(url, {param: payload}, payload, res.status_code)
+                    if res:
+                        logger.debug(f"URL Request Param Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+                        if res.status_code == 200:
+                            found_vulnerabilities += 1
+                        record_request_params(url, {param: payload}, payload, res.status_code)
 
     else:
         for payload in payloads:
+            if found_vulnerabilities >= DISPLAY_LIMIT:
+                raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
             record_request_params(url, {}, payload, 'no_params')
-            
-
 
 def http_vectors(url, action, payloads, headers=None):
+    global found_vulnerabilities
     for payload in payloads:
+        if found_vulnerabilities >= DISPLAY_LIMIT:
+            raise LimitReachedException("DISPLAY_LIMIT reached. Stopping the scan.")
         res = send_request(url, payload, headers)
-        record_request_headers(url, headers if headers else res.headers, payload, res.status_code)
+        if res:
+            logger.debug(f"HTTP Request Payload: {payload}, Status Code: {res.status_code}, Content: {res.text}")
+            if res.status_code == 200:
+                found_vulnerabilities += 1
+            record_request_headers(url, headers if headers else res.headers, payload, res.status_code)
