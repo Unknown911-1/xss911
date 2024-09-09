@@ -1,8 +1,24 @@
 import requests
+import json
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 from lib.utils.logger import logger
 from lib.analyzers.response_analyzer import res_analyzer, LimitReachedException
+from lib.requests.req import session_get
 
+def req_settings():
+    try:
+        with open('settings/request.json', 'r') as f:
+            settings = json.load(f)
+            if settings['request'] == 'session':
+                return True
+
+            elif settings['request'] == 'request':
+                return False
+
+    except FileNotFoundError:
+        logger.error("Request settings file not found.")
+        return False
+        
 def send_request_with_header_payloads(url, payload, headers=None):
     if headers is None:
         headers = {
@@ -11,7 +27,13 @@ def send_request_with_header_payloads(url, payload, headers=None):
             'Cookie': f'test={payload}'
         }
     try:
-        response = requests.get(url, headers=headers)
+        if req_settings():
+            session = session_get(url)
+            response = session.get(url, headers=headers)
+
+        else:
+            response = requests.get(url, headers=headers)
+            
         logger.debug(f"Request with headers: {headers}, Status Code: {response.status_code}, Content: {response.text}")
         return response
     except requests.RequestException as e:
@@ -21,9 +43,18 @@ def send_request_with_header_payloads(url, payload, headers=None):
 def form_request(url, data, method, payload):
     try:
         if method == 'post':
-            res = requests.post(url, data=data)
+            if req_settings():
+                session = session_get(url)
+                res = session.post(url, data=data)
+
+            else:
+                res = requests.post(url, data=data)
         elif method == 'get':
-            res = requests.get(url, params=data)
+            if req_settings():
+                session = session_get(url)
+                res = session.get(url, params=data)
+            else:
+                res = requests.get(url, params=data)
         else:
             logger.error(f'Invalid method: {method}')
             return
@@ -52,11 +83,20 @@ def url_request(url, data, payload, action):
 
         elif action == 'fragment':
             fragment_url = f'{url}#{payload}' if not parsed_url.fragment else f'{url}#{payload}'
-            response = requests.get(fragment_url, timeout=10)
+            if req_settings():
+                session = session_get(url)
+                response = session.get(fragment_url, timeout=10)
+
+            else:
+                response = requests.get(fragment_url, timeout=10)
 
         elif action == 'path':
             path_url = f'{url}/{payload}' if not parsed_url.path else f'{url}/{payload}'
-            response = requests.get(path_url, timeout=10)
+            if req_settings():
+                session = session_get(url)
+                response = session.get(path_url, timeout=10)
+            else:
+                response = requests.get(path_url, timeout=10)
 
         elif action == 'param':
             if not data:
@@ -64,7 +104,11 @@ def url_request(url, data, payload, action):
                 return
             param = list(data.keys())[0]
             param_url = f'{url}?{param}={payload}'
-            response = requests.get(param_url, timeout=10)
+            if req_settings():
+                session = session_get(url)
+                response = session.get(param_url, timeout=10)
+            else:
+                response = requests.get(param_url, timeout=10)
 
         else:
             logger.error(f'Invalid action: {action}')
@@ -91,7 +135,14 @@ def url_request(url, data, payload, action):
 def check_stored_payload(url, payload):
     # Perform a second request to check if the payload is reflected
     try:
-        response = requests.get(url)
+        log_traffic_out(f"Checking stored payload by sending GET request to {url}")
+        
+        if req_settings():
+            session = session_get(url)
+            response = session.get(url, timeout=10)
+        else:
+            response = requests.get(url)
+            
         response.raise_for_status()
         type = 'stored'
         res_analyzer(response, payload, type)

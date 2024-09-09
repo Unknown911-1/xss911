@@ -1,12 +1,42 @@
 import re
 import time
 import requests
+import json
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 from lib.utils.logger import logger, log_payload, log_traffic_in, log_traffic_out
+from lib.requests.req import session_get
 
-# Set the limit for the number of vulnerabilities to stop
-VULNERABILITY_LIMIT = 3
+
+def get_limits():
+    with open('settings/limits.json', 'r') as f:
+        limits = json.load(f)
+        if 'vuln_limit' in limits:
+            return limits['vuln_limit']
+        else:
+            limits['vuln_limit'] = 5
+            json.dump(limits, open('settings/limits.json', 'w'))
+            return limits['vuln_limit']
+
+VULNERABILITY_LIMIT = get_limits()
 found_vulnerabilities = 0
+
+
+def req_settings():
+    try:
+        with open('settings/request.json', 'r') as f:
+            settings = json.load(f)
+            if settings['request'] == 'session':
+                return True
+
+            elif settings['request'] == 'request':
+                return False
+
+    except FileNotFoundError:
+        logger.error("Request settings file not found.")
+        return False
+
+
+# Set the limit for the number of vulnerabilities to sto
 
 class LimitReachedException(Exception):
     pass
@@ -61,7 +91,11 @@ def send_request_with_header_payloads(url, payload, headers=None):
             }
         # Log the outgoing request
         log_traffic_out(f"Sending request with payload in headers to {url}")
-        response = requests.get(url, headers=headers)
+        if req_settings():
+            session = session_get(url)
+            response = session.get(url, headers=headers, timeout=10)
+        else:
+            response = requests.get(url, headers=headers)
         return response
     except requests.RequestException as e:
         logger.error(f'Error sending request with payload {payload}: {e}')
@@ -71,9 +105,18 @@ def form_request(url, data, method, payload):
     try:
         log_traffic_out(f"Sending {method.upper()} request to {url} with payload: {payload}")
         if method == 'post':
-            res = requests.post(url, data=data)
+            if req_settings():
+                session = session_get(url)
+                res = session.post(url, data=data, timeout=10)
+
+            else:
+                res = requests.post(url, data=data, timeout=10)
         elif method == 'get':
-            res = requests.get(url, params=data)
+            if req_settings():
+                session = session_get(url)
+                res = session.get(url, params=data, timeout=10)
+            else:
+                res = requests.get(url, params=data, timeout=10)
         else:
             logger.error(f'Invalid method: {method}')
             return None
@@ -94,17 +137,29 @@ def url_request(url, data, payload, action):
             modified_query = urlencode(query_params, doseq=True)
             modified_url = urlunparse(parsed_url._replace(query=modified_query))
             log_traffic_out(f"Sending GET request with payload in query params to {modified_url}")
-            response = requests.get(modified_url, timeout=10)
+            if req_settings():
+                session = session_get(url)
+                res = session.get(modified_url, timeout=10)
+            else:
+                response = requests.get(modified_url, timeout=10)
 
         elif action == 'fragment':
             fragment_url = f'{url}#{payload}' if not parsed_url.fragment else f'{url}#{payload}'
             log_traffic_out(f"Sending GET request with payload in fragment to {fragment_url}")
-            response = requests.get(fragment_url, timeout=10)
-
+            if req_settings():
+                session = session_get(url)
+                response = requests.get(fragment_url, timeout=10)
+            else:
+                response = requests.get(fragment_url, timeout=10)
+                
         elif action == 'path':
             path_url = f'{url}/{payload}' if not parsed_url.path else f'{url}/{payload}'
             log_traffic_out(f"Sending GET request with payload in path to {path_url}")
-            response = requests.get(path_url, timeout=10)
+            if req_settings():
+                session = session_get(url)
+                response = requests.get(path_url, timeout=10)
+            else:
+                response = requests.get(path_url, timeout=10)
 
         else:
             logger.error(f'Invalid action: {action}')
@@ -124,7 +179,12 @@ def url_request(url, data, payload, action):
 def check_stored_payload(url, payload):
     try:
         log_traffic_out(f"Checking stored payload by sending GET request to {url}")
-        response = requests.get(url)
+        if req_settings():
+            session = session_get(url)
+            response = session.get(url, timeout=10)
+        else:
+            response = requests.get(url)
+            
         response.raise_for_status()
         type = 'stored'
         res_analyzer(response, payload, type)

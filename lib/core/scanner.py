@@ -1,12 +1,25 @@
 import time
+import json
+import os
 from lib.core.attack_vectors import form_vectors, url_vectors, http_vectors
 from lib.core.blind_xss import form_vector, url_vector, http_vector
 from lib.payloads.payload import Payloads
 from lib.core.dom_scanner import dom_xss_attack
 from lib.analyzers.response_analyzer import LimitReachedException
 from lib.utils.logger import logger, log_traffic_in, log_traffic_out, log_payload
+from server import start_server
 
-DISPLAY_LIMIT = 3
+def get_limits():
+    with open('settings/limits.json', 'r') as f:
+        limits = json.load(f)
+        if 'vuln_limit' in limits:
+            return limits['vuln_limit']
+        else:
+            limits['vuln_limit'] = 5
+            json.dump(limits, open('settings/limits.json', 'w'))
+            return limits['vuln_limit']
+
+DISPLAY_LIMIT = get_limits()
 found_vulnerabilities = 0
 
 def load_payloads(type, action):
@@ -48,11 +61,37 @@ def reflective_scan(url, type, action, payloads):
 
     log_traffic_in(f'Reflective XSS scan completed on {url}')
 
+
+def blind_check():
+    with open('xss911/settings/blind.json', 'r') as f:
+        data = json.load(f)
+        if data['server'] == 'yes':
+            return True
+
+        elif data['server'] == 'no':
+            return False
+        else:
+            return False
+
+def delete_blind_check():
+    files = 'settings/blind.json'
+    if os.path.exists(files):
+        os.remove(files)
+    file = 'lib/requests/session.pkl'
+    if os.path.exists(file):
+        os.remove(file)
+    
 def blind_scan(url, type, action, payloads):
     log_traffic_out(f'Starting blind XSS scan on {url}')
 
+    
+
     try:
+        if blind_check():
+            start_server()
+            
         if not payloads:
+            
             logger.error(f'No payloads available for blind scan on {url}')
             return
 
@@ -66,11 +105,15 @@ def blind_scan(url, type, action, payloads):
             http_vector(url, action, [payload])
 
     except LimitReachedException as e:
+        delete_blind_check()
         logger.info(f"Blind scan stopped: {e}")
         return  # Stop the scan when limit is reached
-
+        
     log_traffic_in(f'Blind XSS scan completed on {url}')
+    delete_blind_check()
 
+
+        
 def scan(url, action, type):
     start_time = time.time()
 
@@ -106,6 +149,14 @@ def scan(url, action, type):
     except LimitReachedException as e:
         logger.info(f"Scan stopped: {e}")
 
+    except Exception as e:
+        logger.error(f'Error occurred during scan: {e}')
+        
+    except KeyboardInterrupt:
+        logger.info(f"Scan interrupted by user. Exiting...")
+        exit()
+
     end_time = time.time()
     total_time = end_time - start_time
     logger.info(f'{type.capitalize()} XSS scan completed in {total_time:.2f} seconds')
+

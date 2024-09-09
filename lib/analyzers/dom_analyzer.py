@@ -1,5 +1,6 @@
 import re
 import time
+import json
 from bs4 import BeautifulSoup
 from lib.utils.logger import logger, log_payload, log_traffic_in, log_traffic_out
 from reports.reports import record_dom_attacks
@@ -14,7 +15,17 @@ SINKS = [
 ]
 
 # Set the limit for the number of vulnerabilities to stop
-VULNERABILITY_LIMIT = 3
+def get_limits():
+    with open('settings/limits.json', 'r') as f:
+        limits = json.load(f)
+        if 'vuln_limit' in limits:
+            return limits['vuln_limit']
+        else:
+            limits['vuln_limit'] = 5
+            json.dump(limits, open('settings/limits.json', 'w'))
+            return limits['vuln_limit']
+
+VULNERABILITY_LIMIT = get_limits()
 found_vulnerabilities = 0
 
 class LimitReachedException(Exception):

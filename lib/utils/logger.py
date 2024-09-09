@@ -92,15 +92,6 @@ def set_verbose_mode(is_verbose):
         logger.info("VERBOSE MODE: Showing all logs")
     else:
         console_handler.setLevel(logging.WARNING)
-        logger.info("SILENT MODE: Only showing warnings and errors")
+        logger.warning("SILENT MODE: Only showing warnings and errors")
+        logger.warning(f'Visit this log file to see all logs: {log_filename}')
 
-# Example log entries for testing
-if __name__ == "__main__":
-    logger.debug("This is a DEBUG message")
-    logger.info("This is an INFO message")
-    logger.log(PAYLOAD, "This is a PAYLOAD message")
-    logger.log(TRAFFIC_OUT, "This is a TRAFFIC OUT message")
-    logger.log(TRAFFIC_IN, "This is a TRAFFIC IN message")
-    logger.warning("This is a WARNING message")
-    logger.error("This is an ERROR message")
-    logger.critical("This is a CRITICAL message")

@@ -1,10 +1,22 @@
 import re
 import sys
 import time
+import json
 from lib.utils.logger import logger, log_payload, log_traffic_in, log_traffic_out
 
+
 # Set the limit for the number of vulnerabilities to display
-DISPLAY_LIMIT = 3
+def get_limits():
+    with open('settings/limits.json', 'r') as f:
+        limits = json.load(f)
+        if 'vuln_limit' in limits:
+            return limits['vuln_limit']
+        else:
+            limits['vuln_limit'] = 5
+            json.dump(limits, open('settings/limits.json', 'w'))
+            return limits['vuln_limit']
+
+DISPLAY_LIMIT = get_limits()
 found_vulnerabilities = 0
 
 class LimitReachedException(Exception):
@@ -92,26 +104,3 @@ def is_content_sanitized(content):
             return False
 
     return True
-
-# Example function to demonstrate handling of the limit exception
-def process_scan(urls, payloads):
-    global found_vulnerabilities
-    reset_vulnerability_counter()
-
-    for url in urls:
-        for payload in payloads:
-            try:
-                # Simulate sending a request and receiving a response
-                res = send_request(url, payload)  # Replace with actual function to send requests
-                if res_analyzer(res, payload):
-                    logger.info(f"Processed payload: {payload}")
-            except LimitReachedException as e:
-                logger.info(f"Stopping scan: {e}")
-                return  # Exit the function to stop scanning
-
-def send_request(url, payload):
-    # Mock implementation for demonstration purposes
-    # Replace this with actual HTTP request logic
-    import requests
-    return requests.get(url)  # Dummy implementation
-

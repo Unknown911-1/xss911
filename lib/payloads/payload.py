@@ -188,6 +188,7 @@ def blind_url_injection(url):
     else:
         logger.error('Invalid URL format')
     return False
+    
 
 def Payloads(action, payload_type, custom_file=[]):
     logger.info(f"Loading payloads for {payload_type} with action: {action}")
